@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_bia
+    ports:
+      - "5672:5672"   # Porta de comunicação dos eventos
+      - "15672:15672" # Porta do painel visual para o professor
+
+  # --- ADICIONADO PARA O PROJETO BIA ---
+  produtor:
+    build: .
+    container_name: produtor_bia
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    # Esse comando diz para o Docker rodar o script enviando a mensagem e depois desligar
+    command: python app.py enviar
+
+  consumidor:
+    build: .
+    container_name: consumidor_bia
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+    depends_on:
+      - rabbitmq
+    # Esse comando deixa o container aberto escutando a fila infinitamente
+    command: python app.py receber
