@@ -4,7 +4,7 @@ Este projeto consiste numa demonstração prática e containerizada de uma Arqui
 
 ---
 
-## 1. Arquitetura e Componentes
+## 1 Arquitetura e Componentes
 
 O projeto é estruturado em três serviços isolados que comunicam entre si através de uma rede virtual criada pelo Docker:
 
@@ -19,7 +19,7 @@ O projeto é estruturado em três serviços isolados que comunicam entre si atra
 
 ---
 
-## 2. Pré-requisitos
+## 2 Pré-requisitos
 
 Para executar este projeto num ambiente local, é necessário ter instalado:
 
@@ -29,7 +29,7 @@ Para executar este projeto num ambiente local, é necessário ter instalado:
 
 ---
 
-## 3. Como Executar com Docker Compose
+## 3 Como Executar com Docker Compose
 
 1. Clonar o repositório:
    git clone https://github.com/lucaspietrofire-sudo/Projeto_BIA.git
@@ -45,7 +45,7 @@ Para executar este projeto num ambiente local, é necessário ter instalado:
 
 ---
 
-## 4. Teste Manual em Ambiente Local
+## 4 Teste Manual em Ambiente Local
 
 Para testar o funcionamento dos scripts Python diretamente fora dos containers:
 
@@ -60,6 +60,6 @@ Para testar o funcionamento dos scripts Python diretamente fora dos containers:
 
 ---
 
-## 5. Integração Contínua (CI)
+## 5 Integração Contínua (CI)
 
 O repositório possui uma pipeline configurada através do GitHub Actions (.github/workflows/ci.yml). Este workflow valida automaticamente a sintaxe do ficheiro docker-compose.yml a cada envio (push) ou pedido de integração (pull request) realizado no ramo main.
