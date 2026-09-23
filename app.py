@@ -6,7 +6,7 @@ import os
 def conectar():
     host_rabbit = os.environ.get('RABBITMQ_HOST', 'localhost')
     
-    conexao = pika.BlockingConnection(pika.ConnectionParameters(host=host_rabbit))
+    conexao = pika.BlockingConnection(pika.ConnectionParameters(host=host_rabbit))  # Abre uma ligação TCP direta com o broker RabbitMQ.
     return conexao, conexao.channel()
 
 def enviar_evento():
@@ -19,8 +19,8 @@ def enviar_evento():
     
     channel.basic_publish(
         exchange='',
-        routing_key='fila_bia',
-        body=json.dumps(evento),
+        routing_key='fila_bia',     # Define o destino do evento na fila
+        body=json.dumps(evento),    # Transforma o dicionário Python em string de texto no formato JSON.
         properties=pika.BasicProperties(delivery_mode=2)    # delivery_mode=2 torna a mensagem persistente no disco
     )
     print("[PRODUTOR] Evento enviado para a fila!")
@@ -32,10 +32,10 @@ def iniciar_consumidor():
     
     print('Aguardando mensagens. Para simular que o sistema CAIU, aperte CTRL+C.')
 
-    def callback(ch, method, properties, body):
+    def callback(ch, method, properties, body):     # Função de retorno executada automaticamente sempre que chega uma mensagem
         dados = json.loads(body)
         print(f"[CONSUMIDOR] Evento recebido: {dados['status']}")
-        ch.basic_ack(delivery_tag=method.delivery_tag)
+        ch.basic_ack(delivery_tag=method.delivery_tag)      # Envia a confirmação de leitura
 
     channel.basic_consume(queue='fila_bia', on_message_callback=callback)
     try:
