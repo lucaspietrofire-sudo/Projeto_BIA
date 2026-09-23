@@ -1,23 +1,29 @@
+# Nome da pipeline exibido na aba 'Actions' do GitHub
 name: CI Pipeline - Validacao BIA
 
+# Define quando a pipeline deve ser disparada automaticamente
 on:
   push:
-    branches: [ main ]
+    branches: [ main ] # Dispara em qualquer push na branch main
   pull_request:
-    branches: [ main ]
+    branches: [ main ] # Dispara ao abrir/atualizar Pull Requests para a main
 
 jobs:
   build:
+    # Executa a pipeline numa maquina virtual Linux atualizada
     runs-on: ubuntu-latest
 
     steps:
-    - name: Baixar codigo
-      uses: actions/checkout@v3
+      # Etapa 1: Faz o checkout/download do codigo do repositorio para a maquina do GitHub
+      - name: Baixar codigo
+        uses: actions/checkout@v3
 
-    - name: Configurar Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
+      # Etapa 2: Configura o ambiente Python na versão 3.10
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: Validar sintaxe do Docker Compose
-      run: docker compose config
+      # Etapa 3: Valida se a sintaxe do arquivo docker-compose.yml esta correta
+      - name: Validar sintaxe do Docker Compose
+        run: docker compose config
