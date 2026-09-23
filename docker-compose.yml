@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Serviço principal do Message Broker
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq_bia
@@ -9,6 +10,7 @@ services:
       - "15672:15672" # Porta do painel visual para o professor
 
   # --- ADICIONADO PARA O PROJETO BIA ---
+  # Serviço produtor de eventos (executa e encerra)
   produtor:
     build: .
     container_name: produtor_bia
@@ -19,6 +21,7 @@ services:
     # Esse comando diz para o Docker rodar o script enviando a mensagem e depois desligar
     command: python app.py enviar
 
+  # Serviço consumidor assíncrono (fica em escuta contínua)
   consumidor:
     build: .
     container_name: consumidor_bia
